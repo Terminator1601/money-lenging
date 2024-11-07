@@ -150,18 +150,15 @@
 // export default AuthForm;
 
 
-
-
-"use client";
+// components/AuthForm.tsx
 import "tailwindcss/tailwind.css";
 import React, { useState } from "react";
-import axios from "axios";
+import { getDocs, addDoc, query, where, collection } from "firebase/firestore";
+import { db } from "../../Firebase/config";
 import Cookies from "universal-cookie";
 import Captcha from "../Captcha";
 
 type UserData = {
-  firstName: string;
-  lastName: string;
   username: string;
   email: string;
   phone: string;
@@ -172,12 +169,11 @@ type UserData = {
 
 interface AuthFormProps {
   role: "client" | "merchant";
+  collectionName: string; // Added collectionName to the props
 }
 
-const AuthForm: React.FC<AuthFormProps> = ({ role }) => {
+const AuthForm: React.FC<AuthFormProps> = ({ role, collectionName }) => {
   const [formData, setFormData] = useState<UserData>({
-    firstName: "",
-    lastName: "",
     username: "",
     email: "",
     phone: "",
@@ -217,6 +213,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ role }) => {
       const response = await axios.post(apiUrl, {
         ...formData,
         role,
+        collectionName, // Send collectionName with the request
       });
 
       if (isLoginMode) {
@@ -224,13 +221,14 @@ const AuthForm: React.FC<AuthFormProps> = ({ role }) => {
         alert(`Welcome ${response.data.username}!`);
       } else {
         alert("Registration successful! Please log in.");
-        setIsLoginMode(true); // Switch to login mode after registration
+        setIsLoginMode(true);
       }
     } catch (error: any) {
       console.error("Error during login/registration:", error);
       alert(`Error: ${error.response?.data?.message || error.message}`);
     }
   };
+
 
   return (
     <div className="max-w-md mx-auto mt-8 p-4 bg-white rounded-md shadow-md">
