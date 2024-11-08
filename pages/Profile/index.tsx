@@ -2,12 +2,13 @@
 "use client";
 import "tailwindcss/tailwind.css";
 import ProfileDetail from "../../components/ProfileDetail";
+import LoanApplied from "../../components/LoanApplied"
 import React, { useState } from "react";
 import Header from "../../components/Header";
 
 // Sample components for each section on the right side
 const ProfileDetails = () => <ProfileDetail />;
-const LoansApplied = () => <div>Loans Applied Content</div>;
+const LoansApplied = () => <LoanApplied/>;
 const LoanHistory = () => <div>Loan History Content</div>;
 
 const ProfilePage: React.FC = () => {
