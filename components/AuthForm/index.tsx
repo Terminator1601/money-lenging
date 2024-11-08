@@ -149,17 +149,18 @@
 
 // export default AuthForm;
 
-
-// components/AuthForm.tsx
+"use client";
 import "tailwindcss/tailwind.css";
 import React, { useState } from "react";
-import { getDocs, addDoc, query, where, collection } from "firebase/firestore";
-import { db } from "../../Firebase/config";
+import axios from "axios";
 import Cookies from "universal-cookie";
 import Captcha from "../Captcha";
+// components/AuthForm.tsx
 
 type UserData = {
   username: string;
+  firstName: string;
+  lastName: string;
   email: string;
   phone: string;
   password: string;
@@ -175,6 +176,8 @@ interface AuthFormProps {
 const AuthForm: React.FC<AuthFormProps> = ({ role, collectionName }) => {
   const [formData, setFormData] = useState<UserData>({
     username: "",
+    firstName: "",
+    lastName: "",
     email: "",
     phone: "",
     password: "",
@@ -193,13 +196,17 @@ const AuthForm: React.FC<AuthFormProps> = ({ role, collectionName }) => {
     });
   };
 
+  
   const handleSuccessfulLogin = (userData: UserData) => {
     setIsLoggedIn(true);
     setUsername(userData.username);
+  
+    // Store username, email, and role in cookies
     cookies.set("username", userData.username, { path: "/" });
     cookies.set("email", userData.email, { path: "/" });
-    cookies.set("role", role, { path: "/" });
+    cookies.set("role", role, { path: "/" }); // Store the role as well
   };
+  
 
   const handleSubmit = async () => {
     try {
@@ -228,7 +235,6 @@ const AuthForm: React.FC<AuthFormProps> = ({ role, collectionName }) => {
       alert(`Error: ${error.response?.data?.message || error.message}`);
     }
   };
-
 
   return (
     <div className="max-w-md mx-auto mt-8 p-4 bg-white rounded-md shadow-md">
