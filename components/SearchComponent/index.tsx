@@ -1,7 +1,4 @@
-
-
-"use client"
-import "tailwindcss/tailwind.css"
+import "tailwindcss/tailwind.css";
 import React, { useState } from "react";
 import axios from "axios";
 
@@ -13,7 +10,7 @@ const SearchComponent: React.FC<SearchComponentProps> = ({ onResults }) => {
   const [searchData, setSearchData] = useState({
     location: "",
     loanAmount: "",
-    merchantName: ""
+    username: "", // Updated to match backend parameter
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,7 +24,7 @@ const SearchComponent: React.FC<SearchComponentProps> = ({ onResults }) => {
       const response = await axios.get("http://localhost:5000/searchMerchants", {
         params: searchData,
       });
-      onResults(response.data); // Pass results to parent component
+      onResults(response.data);
     } catch (error) {
       console.error("Error fetching merchant data:", error);
     }
@@ -53,10 +50,10 @@ const SearchComponent: React.FC<SearchComponentProps> = ({ onResults }) => {
       />
       <input
         type="text"
-        name="merchantName"
-        value={searchData.merchantName}
+        name="username" // Updated to match backend parameter
+        value={searchData.username}
         onChange={handleChange}
-        placeholder="Merchant Name"
+        placeholder="Merchant Username"
         className="border p-2 rounded"
       />
       <button type="submit" className="bg-blue-500 text-white p-2 rounded">

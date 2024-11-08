@@ -36,6 +36,9 @@
 
 // export default ParentComponent;
 
+
+
+
 import React, { useState } from "react";
 import axios from "axios";
 import Cookies from "universal-cookie";
@@ -50,11 +53,10 @@ const ParentComponent = () => {
   // Fetch user details from cookies
   const applicantUsername = cookies.get("username");
   const applicantEmail = cookies.get("email");
-  const name = cookies.get("name");
   const applicantRole = cookies.get("role");
 
   // Handle the Apply button click
-  const handleApply = async (merchantName: string, loanAmount: string) => {
+  const handleApply = async (username: string, loanAmount: string) => {
     if (!applicantUsername || !applicantEmail || !applicantRole) {
       alert("User not logged in");
       return;
@@ -64,7 +66,7 @@ const ParentComponent = () => {
       applicantUsername,
       applicantEmail,
       loanAmount,
-      merchantName,
+      username,
       applicantRole,
     };
 
@@ -73,7 +75,7 @@ const ParentComponent = () => {
         "http://localhost:5000/applyLoan",
         applicationData
       );
-      alert(`You have applied to ${merchantName} for a loan of ₹${loanAmount}`);
+      alert(`You have applied to ${username} for a loan of ₹${loanAmount}`);
     } catch (error: any) {
       console.error("Error applying for loan:", error);
       alert("Failed to apply for loan. Please try again.");

@@ -65,7 +65,7 @@ import React, { useState } from "react";
 
 type MerchantCardProps = {
   merchant: {
-    name?: string;
+    username?: string;
     location?: string;
     loanAmount?: string;
     merchantName?: string;
@@ -86,14 +86,14 @@ const MerchantCard: React.FC<MerchantCardProps> = ({ merchant, onApply }) => {
       alert("Please enter a loan amount");
       return;
     }
-    onApply(merchant?.name ?? "", loanAmount);
+    onApply(merchant?.username ?? "", loanAmount);
     setApplied(true);
   };
 
   return (
     <div className="border rounded-lg p-6 shadow-lg mb-6 bg-white hover:shadow-xl transition-shadow duration-300 ease-in-out">
       <h2 className="text-2xl font-semibold text-gray-800 mb-2">
-        {merchant.name ?? "No Name Available"}
+        {merchant.username ?? "No Name Available"}
       </h2>
       <p className="text-gray-600">
         <span className="font-medium">Location:</span> {merchant.location ?? "N/A"}
