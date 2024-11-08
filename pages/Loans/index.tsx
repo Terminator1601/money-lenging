@@ -54,33 +54,22 @@ const ParentComponent = () => {
   const applicantUsername = cookies.get("username");
   const applicantEmail = cookies.get("email");
   const applicantRole = cookies.get("role");
-
-  // Handle the Apply button click
   const handleApply = async (username: string, loanAmount: string) => {
-    if (!applicantUsername || !applicantEmail || !applicantRole) {
-      alert("User not logged in");
-      return;
-    }
-
-    const applicationData = {
-      applicantUsername,
-      applicantEmail,
-      loanAmount,
-      username,
-      applicantRole,
-    };
-
     try {
-      const response = await axios.post(
-        "http://localhost:5000/applyLoan",
-        applicationData
-      );
-      alert(`You have applied to ${username} for a loan of ₹${loanAmount}`);
-    } catch (error: any) {
+      const response = await axios.post("http://localhost:5000/applyLoan", {
+        applicantUsername,
+        applicantEmail,
+        loanAmount,
+        username,
+        applicantRole,
+      });
+      return response.status === 200;
+    } catch (error) {
       console.error("Error applying for loan:", error);
-      alert("Failed to apply for loan. Please try again.");
+      return false;
     }
   };
+  
 
   return (
     <>
