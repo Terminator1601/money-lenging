@@ -48,24 +48,24 @@ const ParentComponent = () => {
   const cookies = new Cookies();
 
   // Fetch user details from cookies
-  const username = cookies.get("username");
-  const email = cookies.get("email");
+  const applicantUsername = cookies.get("username");
+  const applicantEmail = cookies.get("email");
   const name = cookies.get("name");
-  const role = cookies.get("role");
+  const applicantRole = cookies.get("role");
 
   // Handle the Apply button click
   const handleApply = async (merchantName: string, loanAmount: string) => {
-    if (!username || !email || !role) {
+    if (!applicantUsername || !applicantEmail || !applicantRole) {
       alert("User not logged in");
       return;
     }
 
     const applicationData = {
-      username,
-      email,
+      applicantUsername,
+      applicantEmail,
       loanAmount,
       merchantName,
-      role,
+      applicantRole,
     };
 
     try {
